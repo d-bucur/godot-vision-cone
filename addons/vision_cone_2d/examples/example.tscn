@@ -12,12 +12,27 @@ size = Vector2(38, 38)
 [node name="Enemy" parent="." instance=ExtResource("1_d5bxy")]
 position = Vector2(1055, 97)
 
+[node name="Explanation" type="Label" parent="Enemy"]
+offset_left = 18.0
+offset_top = 13.0
+offset_right = 260.0
+offset_bottom = 39.0
+text = "Full 360 vision cone
+with static optimization"
+
 [node name="Enemy2" parent="." instance=ExtResource("1_d5bxy")]
 position = Vector2(776, 705)
 
 [node name="VisionCone2D" parent="Enemy2" index="1"]
 angle = 1.0
 debug_shape = true
+
+[node name="Explanation" type="Label" parent="Enemy2"]
+offset_left = 18.0
+offset_top = 13.0
+offset_right = 260.0
+offset_bottom = 39.0
+text = "Narrow vision cone"
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(600, 404)

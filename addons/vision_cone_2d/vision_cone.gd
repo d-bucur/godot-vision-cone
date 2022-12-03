@@ -1,9 +1,13 @@
 extends Node2D
 
+# TODO rename to vision_cone_2d.gd
+
 class_name VisionCone2D
 
+# TODO add variable descriptions
 @export_group("Raycast parameters")
 @export var ray_count = 100
+# TODO add value range
 @export var angle = 2*PI  # TODO change to degrees
 @export var max_distance = 500
 
@@ -31,18 +35,24 @@ func _physics_process(delta: float) -> void:
 	recalculate_vision()
 
 func recalculate_vision(override_static_flag = false):
-	# TODO if angle is less than 360 need to draw points at beginning and end
 	var position_has_changed = _last_position == null or (global_position - _last_position).length() > static_threshold
-	if override_static_flag or recalculate_if_static or position_has_changed:
-		_last_position = global_position
-		_vision_points.clear()
-		
-		var angular_delta = angle / ray_count
-		for i in range(ray_count): 
-			_ray(Vector2(0, max_distance).rotated(angular_delta * i))
-		
-		_update_collision_polygon()
-		_update_render_polygon()
+	var should_recalculate = override_static_flag or recalculate_if_static or position_has_changed
+	if not should_recalculate:
+		return
+
+	_last_position = global_position
+	_vision_points.clear()
+	
+	var angular_delta = angle / ray_count
+	
+	_optional_origin_point()
+	for i in range(ray_count): 
+		# TODO rotate with transform
+		_ray_to(Vector2(0, max_distance).rotated(angular_delta * i))
+	_optional_origin_point()
+	
+	_update_collision_polygon()
+	_update_render_polygon()
 
 func _draw():
 	if len(_vision_points) == 0:
@@ -71,10 +81,15 @@ func _update_render_polygon():
 	var polygon = PackedVector2Array(_vision_points);
 	write_polygon2d.polygon = polygon
 
-func _ray(direction: Vector2):
+func _ray_to(direction: Vector2):
+	# TODO add offset to origin
 	var destination = global_position + direction
 	var query = PhysicsRayQueryParameters2D.create(global_position, destination, collision_layer_mask)
 	var collision = get_world_2d().direct_space_state.intersect_ray(query)
 
 	var ray_position = collision["position"] if "position" in collision else destination
 	_vision_points.append(to_local(ray_position))
+
+func _optional_origin_point():
+	if angle < 2*PI:
+		_vision_points.append(Vector2.ZERO)
