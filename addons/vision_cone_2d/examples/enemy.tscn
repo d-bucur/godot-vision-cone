@@ -9,11 +9,13 @@ vision_renderer = NodePath("VisionCone2D/VisionConeRenderer")
 alert_color = Color(0.6, 0.270588, 0.247059, 0.368627)
 
 [node name="CharacterRenderer" type="Polygon2D" parent="."]
+rotation = -1.5708
 scale = Vector2(2, 2)
 color = Color(0.901961, 0.141176, 0.188235, 1)
 polygon = PackedVector2Array(-10, -10, 10, -10, 0, 10)
 
 [node name="VisionCone2D" parent="." instance=ExtResource("1_m6h4o")]
+rotation = -1.5708
 recalculate_if_static = false
 
 [connection signal="body_entered" from="VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_entered"]

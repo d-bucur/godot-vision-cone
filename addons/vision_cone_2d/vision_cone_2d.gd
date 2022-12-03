@@ -1,7 +1,5 @@
 extends Node2D
 
-# TODO rename to vision_cone_2d.gd
-
 ## A configurable vision cone for 2D entities. It can be used for example to simulate the vision of enemies in a stealth game.
 class_name VisionCone2D
 
@@ -66,7 +64,7 @@ func recalculate_vision(override_static_flag = false):
 	_optional_origin_point()
 	for i in range(ray_count): 
 		# TODO following transform should be customizable
-		_ray_to(Vector2(0, max_distance).rotated(_angular_delta * i + get_parent().rotation - _angle_half))
+		_ray_to(Vector2(0, max_distance).rotated(_angular_delta * i + global_rotation - _angle_half))
 	_optional_origin_point()
 	
 	_update_collision_polygon()

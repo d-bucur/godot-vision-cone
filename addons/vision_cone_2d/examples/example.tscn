@@ -1,13 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgfg7eijokn1i"]
+[gd_scene load_steps=6 format=3 uid="uid://cgfg7eijokn1i"]
 
 [ext_resource type="PackedScene" uid="uid://bulute7i5ksyy" path="res://addons/vision_cone_2d/examples/enemy.tscn" id="1_d5bxy"]
 [ext_resource type="PackedScene" uid="uid://hm3o2foxwd2m" path="res://addons/vision_cone_2d/examples/wall.tscn" id="2_1w8mk"]
 [ext_resource type="Script" path="res://addons/vision_cone_2d/examples/player_movement.gd" id="2_bmy6t"]
 
+[sub_resource type="Curve2D" id="Curve2D_kvoug"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 81, 129, 0, 0, 0, 0, 275, 32, 0, 0, 0, 0, 664, 137, 0, 0, 0, 0, 403, 221, 0, 0, 0, 0, 386, 612, 0, 0, 0, 0, 1020, 639, 0, 0, 0, 0, 675, 759, 0, 0, 0, 0, 222, 762, 0, 0, 0, 0, 86, 585, 0, 0, 0, 0, 87, 341, 0, 0, 0, 0, 82, 131)
+}
+point_count = 11
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_olhq2"]
 size = Vector2(38, 38)
 
 [node name="example" type="Node2D"]
+
+[node name="PatrolPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_kvoug")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="PatrolPath"]
+position = Vector2(81, 129)
+rotation = -0.463644
 
 [node name="Enemy" parent="." instance=ExtResource("1_d5bxy")]
 position = Vector2(1055, 97)
@@ -51,10 +64,12 @@ text = "Narrow vision cone (<360 deg)
 The target is rotating so the vision cone has to be recalculated even if the character is static
 Since the vision cone is smaller than the one with 360 vision, we can use less rays and save on performance"
 
-[node name="Enemy3" parent="." instance=ExtResource("1_d5bxy")]
-position = Vector2(1077, 705)
-rotation = 2.48366
+[node name="Enemy3" parent="." node_paths=PackedStringArray("move_on_path") instance=ExtResource("1_d5bxy")]
+position = Vector2(211, 130)
+rotation = -0.482968
 rotation_speed = 1.0
+move_on_path = NodePath("../PatrolPath/PathFollow2D")
+movement_speed = 1.0
 
 [node name="VisionCone2D" parent="Enemy3" index="1" node_paths=PackedStringArray("write_polygon2d")]
 angle_deg = 45
