@@ -16,7 +16,7 @@ TODO: update link to asset library once it gets approved
 - Profit! 💸
   
 # 🔧 Configuration
-Script parameters are described in the code for the [script](addons/vision_cone_2d/vision_cone_2d.gd) and they can also be viewed in the editor by hovering the mouse over the property
+Script parameters are described in the [code](addons/vision_cone_2d/vision_cone_2d.gd) and they can also be viewed in the editor by hovering the mouse over the property
 
 Check out the [example scene](addons\vision_cone_2d\examples\example.tscn) to see different configurations for the plugin in action. You can read the text in the explanation labels in the scene for more details on what's happening
 

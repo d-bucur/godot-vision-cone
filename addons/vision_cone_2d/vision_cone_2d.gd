@@ -22,16 +22,17 @@ class_name VisionCone2D
 
 @export_group("Visualization")
 ## Optional shape used to render the cone. This can then be textured and colored to customize the visual aspect
-## Or it can be null if you don't need to visualize the cone, but maybe just use it for AI
+## or it can be null if you don't need to visualize the cone, but maybe just use it for AI
 @export var write_polygon2d: Polygon2D
 ## Will draw lines for each ray. Only used for debugging, you should probably disable it in the actual project
 @export var debug_lines = false
 ## Will draw the shape outline of the cone. Only used for debugging, you should probably disable it in the actual project
 @export var debug_shape = false
 
-@export_group("Static optimization")
+@export_group("Optimizations")
 ## Should the vision cone be recalculated when the object hasn't moved?
-## Set this to false to optimize static objects that will never need to recalculate their vision, ie. static cameras
+## Set this to false to optimize by not recalculating the area if the object hasn't moved.
+## May incorrectly avoid an update if the object rotates in place or the scene layout changes at runtime
 @export var recalculate_if_static = true
 ## How far the character has to move before the vision cone is recalculated. Only used if recalculate_if_static is false
 @export var static_threshold: float = 2
@@ -53,10 +54,12 @@ func _physics_process(delta: float) -> void:
 	recalculate_vision()
 
 func recalculate_vision(override_static_flag = false):
-	var position_has_changed = _last_position == null or (global_position - _last_position).length() > static_threshold
-	var should_recalculate = override_static_flag or recalculate_if_static or position_has_changed
+	var should_recalculate = override_static_flag or recalculate_if_static
 	if not should_recalculate:
-		return
+		var has_position_changed = _last_position == null or (global_position - _last_position).length() > static_threshold
+		if not has_position_changed:
+			return
+	
 	_last_position = global_position
 	_vision_points.clear()
 	_vision_points = calculate_vision_shape(override_static_flag)
