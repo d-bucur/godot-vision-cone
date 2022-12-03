@@ -10,4 +10,6 @@ var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func _physics_process(delta: float) -> void:
-	position.x = start_pos + sin(Time.get_ticks_msec()/1000. * speed) * distance
+	var target_pos = start_pos + sin(Time.get_ticks_msec()/1000. * speed) * distance
+	velocity = Vector2(target_pos - position.x, 0)
+	move_and_slide()

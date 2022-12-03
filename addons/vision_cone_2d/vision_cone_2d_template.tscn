@@ -12,7 +12,7 @@ write_polygon2d = NodePath("VisionConeRenderer")
 color = Color(0.431373, 0.929412, 0.278431, 0.286275)
 
 [node name="VisionConeArea" type="Area2D" parent="."]
-monitoring = false
+collision_layer = 0
 monitorable = false
 
 [node name="VisionConeCollider" type="CollisionPolygon2D" parent="VisionConeArea"]
