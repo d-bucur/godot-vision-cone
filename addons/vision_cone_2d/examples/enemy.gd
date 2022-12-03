@@ -9,6 +9,8 @@ extends CharacterBody2D
 @onready var original_color = vision_renderer.color if vision_renderer else Color.WHITE
 @onready var rot_start = rotation
 
+# TODO add moving enemy
+
 func _on_vision_cone_area_body_entered(body: Node2D) -> void:
 	# print("%s is seeing %s" % [self, body])
 	vision_renderer.color = alert_color
