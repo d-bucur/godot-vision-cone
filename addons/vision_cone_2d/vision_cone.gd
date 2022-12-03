@@ -8,7 +8,7 @@ class_name VisionCone2D
 @export_group("Raycast parameters")
 @export var ray_count = 100
 # TODO add value range
-@export var angle = 2*PI  # TODO change to degrees
+@export var angle_deg = 360
 @export var max_distance = 500
 
 @export_group("Collisions")
@@ -21,11 +21,16 @@ class_name VisionCone2D
 @export var debug_shape = false
 
 @export_group("Static optimization")
-@export var recalculate_if_static = false
+@export var recalculate_if_static = true
 @export var static_threshold: float = 10
 
 var _vision_points: Array[Vector2]
 var _last_position = null
+
+# constants for optimization
+@onready var _angle = deg_to_rad(angle_deg)
+@onready var _angle_half = _angle/2.
+@onready var _angular_delta = _angle / ray_count
 
 func _process(_delta: float) -> void:
 	if debug_lines or debug_shape:
@@ -43,12 +48,10 @@ func recalculate_vision(override_static_flag = false):
 	_last_position = global_position
 	_vision_points.clear()
 	
-	var angular_delta = angle / ray_count
-	
 	_optional_origin_point()
 	for i in range(ray_count): 
-		# TODO rotate with transform
-		_ray_to(Vector2(0, max_distance).rotated(angular_delta * i))
+		# TODO following transform should be customizable
+		_ray_to(Vector2(0, max_distance).rotated(_angular_delta * i + get_parent().rotation - _angle_half))
 	_optional_origin_point()
 	
 	_update_collision_polygon()
@@ -91,5 +94,5 @@ func _ray_to(direction: Vector2):
 	_vision_points.append(to_local(ray_position))
 
 func _optional_origin_point():
-	if angle < 2*PI:
+	if _angle < 2*PI:
 		_vision_points.append(Vector2.ZERO)

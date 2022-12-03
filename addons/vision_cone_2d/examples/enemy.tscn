@@ -14,6 +14,7 @@ color = Color(0.901961, 0.141176, 0.188235, 1)
 polygon = PackedVector2Array(-10, -10, 10, -10, 0, 10)
 
 [node name="VisionCone2D" parent="." instance=ExtResource("1_m6h4o")]
+recalculate_if_static = false
 
 [connection signal="body_entered" from="VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_entered"]
 [connection signal="body_exited" from="VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_exited"]
