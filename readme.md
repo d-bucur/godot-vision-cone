@@ -1,7 +1,7 @@
 # 🎯 Description
-A plugin for Godot 4 that adds a configurable vision cone to 2D entities. It can be used for example to simulate the vision of enemies in a stealth game. It is implemented using a simple raycast in many directions algorithm as described [here](https://www.redblobgames.com/articles/visibility/).
+A plugin for Godot 4 that adds a configurable vision cone to 2D entities. It can be used for example to simulate the vision of enemies in a stealth game. It is implemented using a simple raycast in uniform directions algorithm as shown in the first picture [here](https://www.redblobgames.com/articles/visibility/).
 
-TODO: add gif of example project
+![vision cone demo](https://github.com/d-bucur/demos/raw/master/godot-vision-cone.gif)
 
 TODO: update link to asset library once it gets approved
 
@@ -20,9 +20,9 @@ Script parameters are described in the code for the [script](addons/vision_cone_
 
 Check out the [example scene](addons\vision_cone_2d\examples\example.tscn) to see different configurations for the plugin in action. You can read the text in the explanation labels in the scene for more details on what's happening
 
-The main idea is that rays are shot into many directions around the object and the resulting shape can be written to a render shape like Polygon2D or to a collision shape like CollisionPolygon2D
+The main idea is that rays are shot into many directions around the object and the resulting shape can be written to a render shape like Polygon2D or to a collision shape like CollisionPolygon2D. You can also call `calculate_vision_shape()` directly to get an array of points for the shape and then use that however you wish.
 
-The DebugDraw node and associated script only draw the cone inside the editor as this has to be done in a different script entirely
+The DebugDraw node and associated script only draw an approximation of the cone inside the editor as this has to be done in a different script entirely and cannot use actual physics in the scene
 
 # 📝 Notes
 - This implements the simple raycasting method described [here](https://www.redblobgames.com/articles/visibility/). The optimized version of it with raycasts to corners is hard to make as a general solution that will work on different projects
