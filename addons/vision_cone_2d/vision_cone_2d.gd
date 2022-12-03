@@ -30,7 +30,7 @@ class_name VisionCone2D
 @export var debug_shape = false
 
 @export_group("Optimizations")
-## Introduce a minimum time before recalculating. Useful to improve performance for slow moving objects,
+## Introduce a minimum time (in msec) before recalculating. Useful to improve performance for slow moving objects,
 ## or objects where precise updates on every physics update are not necessary
 @export var minimum_recalculate_time_msec = 0
 ## Should the vision cone be recalculated when the object hasn't moved?
@@ -93,7 +93,7 @@ func _draw():
 		if debug_shape:
 			draw_line(from, to, Color.GREEN)
 		if debug_lines:
-			draw_line(Vector2.ZERO, to, Color.BLUE)
+			draw_line(Vector2.ZERO, to, Color(0, 0, 1, 0.5))
 		from = to
 	
 func _update_collision_polygon():

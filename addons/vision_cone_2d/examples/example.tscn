@@ -76,6 +76,7 @@ angle_deg = 45
 ray_count = 10
 max_distance = 700
 write_polygon2d = NodePath("")
+debug_lines = true
 debug_shape = true
 minimum_recalculate_time_msec = 250
 
