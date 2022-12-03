@@ -44,7 +44,7 @@ text = "The signal from the vision cone area is connected to the enemy script, w
 
 [node name="Enemy2" parent="." instance=ExtResource("1_d5bxy")]
 position = Vector2(301, 705)
-rotation = 3.14159
+rotation = -1.5708
 is_rotating = true
 rotation_speed = 1.0
 
@@ -69,7 +69,7 @@ position = Vector2(211, 130)
 rotation = -0.482968
 rotation_speed = 1.0
 move_on_path = NodePath("../PatrolPath/PathFollow2D")
-movement_speed = 1.0
+movement_speed = 3.0
 
 [node name="VisionCone2D" parent="Enemy3" index="1" node_paths=PackedStringArray("write_polygon2d")]
 angle_deg = 45

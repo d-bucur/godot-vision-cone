@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bulute7i5ksyy"]
 
-[ext_resource type="PackedScene" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="1_m6h4o"]
+[ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="1_m6h4o"]
 [ext_resource type="Script" path="res://addons/vision_cone_2d/examples/enemy.gd" id="1_pxito"]
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("vision_renderer")]
@@ -17,6 +17,9 @@ polygon = PackedVector2Array(-10, -10, 10, -10, 0, 10)
 [node name="VisionCone2D" parent="." instance=ExtResource("1_m6h4o")]
 rotation = -1.5708
 recalculate_if_static = false
+
+[node name="DebugDraw" parent="VisionCone2D" index="2"]
+is_visible = null
 
 [connection signal="body_entered" from="VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_entered"]
 [connection signal="body_exited" from="VisionCone2D/VisionConeArea" to="." method="_on_vision_cone_area_body_exited"]

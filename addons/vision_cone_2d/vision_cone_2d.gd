@@ -57,18 +57,23 @@ func recalculate_vision(override_static_flag = false):
 	var should_recalculate = override_static_flag or recalculate_if_static or position_has_changed
 	if not should_recalculate:
 		return
-
 	_last_position = global_position
 	_vision_points.clear()
-	
-	_optional_origin_point()
-	for i in range(ray_count): 
-		# TODO following transform should be customizable
-		_ray_to(Vector2(0, max_distance).rotated(_angular_delta * i + global_rotation - _angle_half))
-	_optional_origin_point()
-	
+	_vision_points = calculate_vision_shape(override_static_flag)
 	_update_collision_polygon()
 	_update_render_polygon()
+
+func calculate_vision_shape(override_static_flag = false) -> Array[Vector2]:
+	var new_vision_points = []
+	if _angle < 2*PI:
+		new_vision_points.append(Vector2.ZERO)
+	for i in range(ray_count + 1): 
+		# TODO following transform should be customizable
+		var p = _ray_to(Vector2(0, max_distance).rotated(_angular_delta * i + global_rotation - _angle_half))
+		new_vision_points.append(p)
+	if _angle < 2*PI:
+		new_vision_points.append(Vector2.ZERO)
+	return new_vision_points
 
 func _draw():
 	if len(_vision_points) == 0:
@@ -97,15 +102,11 @@ func _update_render_polygon():
 	var polygon = PackedVector2Array(_vision_points);
 	write_polygon2d.polygon = polygon
 
-func _ray_to(direction: Vector2):
+func _ray_to(direction: Vector2) -> Vector2:
 	# TODO add offset to origin
 	var destination = global_position + direction
 	var query = PhysicsRayQueryParameters2D.create(global_position, destination, collision_layer_mask)
 	var collision = get_world_2d().direct_space_state.intersect_ray(query)
 
 	var ray_position = collision["position"] if "position" in collision else destination
-	_vision_points.append(to_local(ray_position))
-
-func _optional_origin_point():
-	if _angle < 2*PI:
-		_vision_points.append(Vector2.ZERO)
+	return to_local(ray_position)
