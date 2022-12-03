@@ -30,6 +30,9 @@ class_name VisionCone2D
 @export var debug_shape = false
 
 @export_group("Optimizations")
+## Introduce a minimum time before recalculating. Useful to improve performance for slow moving objects,
+## or objects where precise updates on every physics update are not necessary
+@export var minimum_recalculate_time_msec = 0
 ## Should the vision cone be recalculated when the object hasn't moved?
 ## Set this to false to optimize by not recalculating the area if the object hasn't moved.
 ## May incorrectly avoid an update if the object rotates in place or the scene layout changes at runtime
@@ -39,6 +42,7 @@ class_name VisionCone2D
 
 var _vision_points: Array[Vector2]
 var _last_position = null
+var _last_redraw_time = 0
 
 # constants for optimization
 @onready var _angle = deg_to_rad(angle_deg)
@@ -49,9 +53,10 @@ func _process(_delta: float) -> void:
 	if debug_lines or debug_shape:
 		queue_redraw()
 
-# TODO add param for minimum time before redraw
 func _physics_process(delta: float) -> void:
-	recalculate_vision()
+	if Time.get_ticks_msec() - _last_redraw_time > minimum_recalculate_time_msec:
+		_last_redraw_time = Time.get_ticks_msec()
+		recalculate_vision()
 
 func recalculate_vision(override_static_flag = false):
 	var should_recalculate = override_static_flag or recalculate_if_static
