@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bulute7i5ksyy"]
 
-[ext_resource type="PackedScene" uid="uid://qt17nfkn38d5" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="1_m6h4o"]
+[ext_resource type="PackedScene" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="1_m6h4o"]
 [ext_resource type="Script" path="res://addons/vision_cone_2d/examples/enemy.gd" id="1_pxito"]
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("vision_renderer")]

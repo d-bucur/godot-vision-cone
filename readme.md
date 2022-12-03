@@ -25,6 +25,7 @@ Check out the [example scene](addons\vision_cone_2d\examples\example.tscn) to se
 - This only works with 2D nodes right now but if there is any interest in it, reach out to me and I will consider doing a 3D version
 - This only supports Godot 4 and I don't plan on supporting Godot 3. You are free to fork and add support for it
 - This has only been tested in mobile renderer, but should work in forward mode as well
+- At the time of writing, Polygon2D does not render correctly in exported web builds [link to issue](https://github.com/godotengine/godot/issues/69533)
 
 # 🪪 License
 [Apache](LICENSE-APACHE) or [MIT](LICENSE-MIT), whichever you prefer

@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://qt17nfkn38d5"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://addons/vision_cone_2d/vision_cone.gd" id="1_eakwj"]
+[ext_resource type="Script" path="res://addons/vision_cone_2d/vision_cone_2d.gd" id="1_eakwj"]
 
 [node name="VisionCone2D" type="Node2D" node_paths=PackedStringArray("write_collision_polygon", "write_polygon2d")]
 script = ExtResource("1_eakwj")

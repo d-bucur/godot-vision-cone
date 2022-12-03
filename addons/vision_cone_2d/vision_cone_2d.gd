@@ -2,6 +2,7 @@ extends Node2D
 
 # TODO rename to vision_cone_2d.gd
 
+## A configurable vision cone for 2D entities. It can be used for example to simulate the vision of enemies in a stealth game.
 class_name VisionCone2D
 
 @export_group("Raycast parameters")

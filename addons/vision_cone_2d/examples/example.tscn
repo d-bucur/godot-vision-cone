@@ -36,7 +36,9 @@ is_rotating = true
 rotation_speed = 1.0
 
 [node name="VisionCone2D" parent="Enemy2" index="1"]
+angle_deg = 45
 ray_count = 50
+max_distance = 700
 recalculate_if_static = true
 
 [node name="Explanation" type="Label" parent="Enemy2"]
@@ -55,7 +57,9 @@ rotation = 2.48366
 rotation_speed = 1.0
 
 [node name="VisionCone2D" parent="Enemy3" index="1" node_paths=PackedStringArray("write_polygon2d")]
+angle_deg = 45
 ray_count = 10
+max_distance = 700
 write_polygon2d = NodePath("")
 debug_shape = true
 
