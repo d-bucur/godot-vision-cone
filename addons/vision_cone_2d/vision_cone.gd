@@ -4,25 +4,38 @@ extends Node2D
 
 class_name VisionCone2D
 
-# TODO add variable descriptions
 @export_group("Raycast parameters")
+## How wide the vision cone is in degrees
+@export_range(0, 360) var angle_deg = 360
+## Total number of rays that will be shot to cover the angle. Will be distributed at equal distances.
+## This has the biggest impact on performance in the script.
+## Have this high enough that it is precise, but low enough that it doesn't affect performance
 @export var ray_count = 100
-# TODO add value range
-@export var angle_deg = 360
-@export var max_distance = 500
+## The maximum length of the rays. Basically how far the character can see
+@export var max_distance = 500.
 
 @export_group("Collisions")
+## What collision layers will block the vision. Have it set to the same layer as your walls, while avoiding things like items or characters
 @export_flags_2d_physics var collision_layer_mask: int = 0
+## Optional collision shape that the cone will be copied to.
+## Use this if you want to have logic on things entering the cone (you probably do, unless you're just visualizing the cone without acting on it)
 @export var write_collision_polygon: CollisionPolygon2D
 
 @export_group("Visualization")
+## Optional shape used to render the cone. This can then be textured and colored to customize the visual aspect
+## Or it can be null if you don't need to visualize the cone, but maybe just use it for AI
 @export var write_polygon2d: Polygon2D
+## Will draw lines for each ray. Only used for debugging, you should probably disable it in the actual project
 @export var debug_lines = false
+## Will draw the shape outline of the cone. Only used for debugging, you should probably disable it in the actual project
 @export var debug_shape = false
 
 @export_group("Static optimization")
+## Should the vision cone be recalculated when the object hasn't moved?
+## Set this to false to optimize static objects that will never need to recalculate their vision, ie. static cameras
 @export var recalculate_if_static = true
-@export var static_threshold: float = 10
+## How far the character has to move before the vision cone is recalculated. Only used if recalculate_if_static is false
+@export var static_threshold: float = 2
 
 var _vision_points: Array[Vector2]
 var _last_position = null
@@ -36,6 +49,7 @@ func _process(_delta: float) -> void:
 	if debug_lines or debug_shape:
 		queue_redraw()
 
+# TODO add param for minimum time before redraw
 func _physics_process(delta: float) -> void:
 	recalculate_vision()
 

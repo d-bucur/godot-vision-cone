@@ -37,8 +37,6 @@ rotation_speed = 1.0
 
 [node name="VisionCone2D" parent="Enemy2" index="1"]
 ray_count = 50
-angle_deg = 45
-max_distance = 700
 recalculate_if_static = true
 
 [node name="Explanation" type="Label" parent="Enemy2"]
@@ -58,8 +56,6 @@ rotation_speed = 1.0
 
 [node name="VisionCone2D" parent="Enemy3" index="1" node_paths=PackedStringArray("write_polygon2d")]
 ray_count = 10
-angle_deg = 45
-max_distance = 700
 write_polygon2d = NodePath("")
 debug_shape = true
 
@@ -121,7 +117,7 @@ offset_left = 18.0
 offset_top = 13.0
 offset_right = 260.0
 offset_bottom = 39.0
-text = "This acts as a window, as its collision layer is 3, so the vision rays will not collide with it, but characters will still collide"
+text = "This acts as a window, as its collision layer is 3, so the vision rays will not collide with it, but characters will not be able to pass through"
 
 [node name="Wall2" parent="Level" instance=ExtResource("2_1w8mk")]
 position = Vector2(618, 559)
