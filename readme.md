@@ -3,7 +3,7 @@ A plugin for Godot 4 that adds a configurable vision cone to 2D entities. It can
 
 ![vision cone demo](https://github.com/d-bucur/demos/raw/master/godot-vision-cone.gif)
 
-TODO: update link to asset library once it gets approved
+[Asset library page](https://godotengine.org/asset-library/asset/1568)
 
 # 🚅 Quickstart
 - [Install the plugin](https://docs.godotengine.org/en/stable/tutorials/plugins/editor/installing_plugins.html)
@@ -12,7 +12,7 @@ TODO: update link to asset library once it gets approved
 - Configure properties in the `VisionCone2D` node. More details in [this section](#-configuration)
 - Connect `body_entered`/`body_exited` signals from `VisionCone2D/VisionConeArea` node to your main game logic
 - You can duplicate vision_cone_2d_template.tscn into your project and modify it to better suit objects in your project, or just attach the [vision_cone_2d.gd](addons/vision_cone_2d/vision_cone.gd) script to any node in your scene and configure everything manually
-- ?
+- ???
 - Profit! 💸
   
 # 🔧 Configuration
