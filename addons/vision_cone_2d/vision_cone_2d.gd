@@ -72,7 +72,7 @@ func recalculate_vision(override_static_flag = false):
 	_update_render_polygon()
 
 func calculate_vision_shape(override_static_flag = false) -> Array[Vector2]:
-	var new_vision_points = []
+	var new_vision_points: Array[Vector2] = []
 	if _angle < 2*PI:
 		new_vision_points.append(Vector2.ZERO)
 	for i in range(ray_count + 1): 
