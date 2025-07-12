@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://kf8tqdlm8c5t"]
 
-[ext_resource type="Script" path="res://addons/vision_cone_2d/vision_cone_2d.gd" id="1_eakwj"]
-[ext_resource type="Script" path="res://addons/vision_cone_2d/cone_editor_helper.gd" id="2_opycg"]
+[ext_resource type="Script" uid="uid://bo744wpycscqd" path="res://addons/vision_cone_2d/vision_cone_2d.gd" id="1_eakwj"]
+[ext_resource type="Script" uid="uid://b88iifj2svjwc" path="res://addons/vision_cone_2d/cone_editor_helper.gd" id="2_opycg"]
 
 [node name="VisionCone2D" type="Node2D" node_paths=PackedStringArray("write_collision_polygon", "write_polygon2d")]
 script = ExtResource("1_eakwj")

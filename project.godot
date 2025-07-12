@@ -8,21 +8,11 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "Node2D",
-"class": &"VisionCone2D",
-"language": &"GDScript",
-"path": "res://addons/vision_cone_2d/vision_cone_2d.gd"
-}]
-_global_script_class_icons={
-"VisionCone2D": ""
-}
-
 [application]
 
 config/name="vision-cone"
 run/main_scene="res://addons/vision_cone_2d/examples/example.tscn"
-config/features=PackedStringArray("4.0", "Mobile")
+config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
