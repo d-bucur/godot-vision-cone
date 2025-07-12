@@ -29,11 +29,10 @@ The DebugDraw node and associated script only draw an approximation of the cone 
 - If you need performant checks for multiple entities (ie lots of enemies checking for a single player), it is better to just go for focused raycasts in the player direction, as described in [this tutorial](https://www.youtube.com/watch?v=04A7pUkhx3E). This plugin has worse performance than that and is useful only if you need to display the vision on the screen, or if you need to check visibility for multiple entities (ie, enemies checking visibility with other enemies or items in the world)
 
 # 🛟 Compatibility
-- Only works with 2D nodes right now but if there is any interest in it, reach out to me and I will consider doing a 3D version
+- Only works with 2D nodes
 - Only supports Godot 4 and I don't plan on supporting Godot 3. You are free to fork and add support for it
-- Tested with v4.0.beta6
+- Tested with v4.4.1 but is known to work with all 4.* versions
 - Has only been tested in mobile renderer, but should work in forward mode as well
-- At the time of writing, Polygon2D does not render correctly in exported web builds. See [issue](https://github.com/godotengine/godot/issues/69533)
 
 # 🪪 License
 [Apache](LICENSE-APACHE) or [MIT](LICENSE-MIT), whichever you prefer
