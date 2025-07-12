@@ -5,13 +5,13 @@ class_name VisionCone2D
 
 @export_group("Raycast parameters")
 ## How wide the vision cone is in degrees
-@export_range(0, 360) var angle_deg = 360
+@export_range(0, 360) var angle_deg: int = 360
 ## Total number of rays that will be shot to cover the angle. Will be distributed at equal distances.
 ## This has the biggest impact on performance in the script.
 ## Have this high enough that it is precise, but low enough that it doesn't affect performance
-@export var ray_count = 100
+@export var ray_count: int = 100
 ## The maximum length of the rays. Basically how far the character can see
-@export var max_distance = 500.
+@export var max_distance: float = 500.
 
 @export_group("Collisions")
 ## What collision layers will block the vision. Have it set to the same layer as your walls, while avoiding things like items or characters
@@ -25,29 +25,29 @@ class_name VisionCone2D
 ## or it can be null if you don't need to visualize the cone, but maybe just use it for AI
 @export var write_polygon2d: Polygon2D
 ## Will draw lines for each ray. Only used for debugging, you should probably disable it in the actual project
-@export var debug_lines = false
+@export var debug_lines: bool = false
 ## Will draw the shape outline of the cone. Only used for debugging, you should probably disable it in the actual project
-@export var debug_shape = false
+@export var debug_shape: bool = false
 
 @export_group("Optimizations")
 ## Introduce a minimum time (in msec) before recalculating. Useful to improve performance for slow moving objects,
 ## or objects where precise updates on every physics update are not necessary
-@export var minimum_recalculate_time_msec = 0
+@export var minimum_recalculate_time_msec: int = 0
 ## Should the vision cone be recalculated when the object hasn't moved?
 ## Set this to false to optimize by not recalculating the area if the object hasn't moved.
 ## May incorrectly avoid an update if the object rotates in place or the scene layout changes at runtime
-@export var recalculate_if_static = true
+@export var recalculate_if_static: bool = true
 ## How far the character has to move before the vision cone is recalculated. Only used if recalculate_if_static is false
 @export var static_threshold: float = 2
 
 var _vision_points: Array[Vector2]
-var _last_position = null
-var _last_redraw_time = 0
+var _last_position = null  ## Optional[Vector2]
+var _last_redraw_time: int = 0
 
 # constants for optimization
-@onready var _angle = deg_to_rad(angle_deg)
-@onready var _angle_half = _angle/2.
-@onready var _angular_delta = _angle / ray_count
+@onready var _angle: float = deg_to_rad(angle_deg)
+@onready var _angle_half: float = _angle/2.
+@onready var _angular_delta: float = _angle / ray_count
 
 func _process(_delta: float) -> void:
 	if debug_lines or debug_shape:
@@ -116,5 +116,5 @@ func _ray_to(direction: Vector2) -> Vector2:
 	var query = PhysicsRayQueryParameters2D.create(global_position, destination, collision_layer_mask)
 	var collision = get_world_2d().direct_space_state.intersect_ray(query)
 
-	var ray_position = collision["position"] if "position" in collision else destination
+	var ray_position = collision.get("position", destination)
 	return to_local(ray_position)
