@@ -39,6 +39,11 @@ class_name VisionCone2D
 @export var recalculate_if_static: bool = true
 ## How far the character has to move before the vision cone is recalculated. Only used if recalculate_if_static is false
 @export var static_threshold: float = 2
+## How far two adjacent ray points have to be from each other before adding a new point to the shape.
+## Use this to reduce the number of vertices in the cone mesh when there are a lot of them close together.
+## Increasing this can help with performance or when getting Godot errors like [Convex decomposing failed], at the cost of detail
+## A <= 0 value will disable this behavior altogether. The value has to be squared, aka distance^2 (for performance reasons the sqrt is avoided)
+@export var min_distance_sqr: float = 16
 
 var _vision_points: Array[Vector2]
 var _last_position = null  ## Optional[Vector2]
@@ -73,12 +78,23 @@ func recalculate_vision(override_static_flag = false):
 
 func calculate_vision_shape(override_static_flag = false) -> Array[Vector2]:
 	var new_vision_points: Array[Vector2] = []
+	var last_point = null # Optional[Vector2]
+
 	if _angle < 2*PI:
 		new_vision_points.append(Vector2.ZERO)
+		last_point = Vector2.ZERO
+
 	for i in range(ray_count + 1): 
 		# TODO following transform should be customizable
-		var p = _ray_to(Vector2(0, max_distance).rotated(_angular_delta * i + global_rotation - _angle_half))
-		new_vision_points.append(p)
+		var new_point = _ray_to(Vector2(0, max_distance).rotated(_angular_delta * i + global_rotation - _angle_half))
+		if min_distance_sqr > 0 and last_point:
+			# check against min_distance_sqr
+			var dist = (new_point - last_point).length_squared()
+			if dist < min_distance_sqr:
+				continue
+		new_vision_points.append(new_point)
+		last_point = new_point
+
 	if _angle < 2*PI:
 		new_vision_points.append(Vector2.ZERO)
 	return new_vision_points
@@ -99,16 +115,12 @@ func _draw():
 func _update_collision_polygon():
 	if write_collision_polygon == null:
 		return
-	write_collision_polygon.polygon.clear()
-	var polygon = PackedVector2Array()
-	polygon.append_array(_vision_points)
-	write_collision_polygon.polygon = polygon
+	write_collision_polygon.polygon = _vision_points
 
 func _update_render_polygon():
 	if write_polygon2d == null:
 		return
-	var polygon = PackedVector2Array(_vision_points);
-	write_polygon2d.polygon = polygon
+	write_polygon2d.polygon = _vision_points
 
 func _ray_to(direction: Vector2) -> Vector2:
 	# TODO add offset to origin
