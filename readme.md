@@ -4,6 +4,7 @@ A plugin for Godot 4 that adds a configurable vision cone to 2D entities. It can
 ![vision cone demo](https://github.com/d-bucur/demos/raw/master/godot-vision-cone.gif)
 
 [Asset library page](https://godotengine.org/asset-library/asset/1568)
+
 [New asset store page](https://store-beta.godotengine.org/asset/sirdorius/vision-cone/)
 
 # 🚅 Quickstart
